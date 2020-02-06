@@ -1,0 +1,49 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: backup
+  namespace: default
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: loumaris/backup:1.0.0
+            env:
+            - name: FTP_USERNAME
+              value: user
+            - name: FTP_PASSWORD
+              value: password
+            - name: FTP_SERVER
+              value: server
+            - name: FTP_PORT
+              value: "21"
+            - name: FTP_PATH
+              value: /
+            - name: BACKUP_FOLDER
+              value: /mnt/
+            - name: SLACK_URL
+              value: https://slack.com/foo/bar
+            - name: PSQL_SERVER
+              value: localhost
+            - name: PSQL_DATABASE
+              value: backup_db
+            - name: PSQL_PASSWORD
+              value: password
+            - name: PSQL_USERNAME
+              value: username
+            volumeMounts:
+            - mountPath: /mnt/
+              name: storage
+          volumes:
+          - hostPath:
+              path: /srv/path/for/backup
+              type: ""
+            name: storage
+          restartPolicy: OnFailure
+
+
