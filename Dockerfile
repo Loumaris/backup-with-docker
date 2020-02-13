@@ -19,5 +19,8 @@ WORKDIR /root/Backup
 
 ADD Backup /root/Backup
 
+# data_dir for cycle information
+VOLUME [ "/data" ]
+
 # run backup
 CMD [ "backup", "perform", "--trigger", "psql,folder"]

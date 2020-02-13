@@ -5,6 +5,8 @@
 # Documentation: http://meskyanichi.github.io/backup
 # Issue Tracker: https://github.com/meskyanichi/backup/issues
 
+data_path '/data'
+
 if ENV.key?('FTP_SERVER')
   Storage::FTP.defaults do |server|
     server.username     = ENV['FTP_USERNAME']
