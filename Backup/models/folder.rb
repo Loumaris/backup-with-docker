@@ -8,6 +8,7 @@ Backup::Model.new(:folder, "backup of #{ENV['BACKUP_FOLDER']}") do
   archive :archive do |archive|
     ENV['BACKUP_FOLDER'].split(',').each do |folder|
       archive.add "#{folder}"
+      archive.tar_options '--warning=no-file-changed' if ENV.key?('IGNORE_FILE_CHANGED')
     end
   end
 end
