@@ -28,15 +28,15 @@ if ENV.key?('SFTP_SERVER')
     server.port         = ENV['SFTP_PORT']
     server.path         = ENV['SFTP_PATH']
     server.keep         = ENV.fetch('SFTP_KEEP', 1)
-    server.ssh_options = {  user_known_hosts_file: "/dev/null" }
+    server.ssh_options = { user_known_hosts_file: "/dev/null" }
   end
 end
 
 if ENV.key?('SLACK_URL')
   Notifier::Slack.defaults do |slack|
-    slack.on_success = ENV.fetch('SLACK_NOTIFY_SUCCESS', true)
-    slack.on_warning = ENV.fetch('SLACK_NOTIFY_WARNING', true)
-    slack.on_failure = ENV.fetch('SLACK_NOTIFY_FAILURE', true)
+    slack.on_success = (ENV.fetch('SLACK_NOTIFY_SUCCESS', true).to_s == 'true')
+    slack.on_warning = (ENV.fetch('SLACK_NOTIFY_WARNING', true).to_s == 'true')
+    slack.on_failure = (ENV.fetch('SLACK_NOTIFY_FAILURE', true).to_s == 'true')
 
     slack.webhook_url = ENV['SLACK_URL']
   end
